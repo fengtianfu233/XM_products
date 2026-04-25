@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>佛山市鑫敏电子科技有限公司</title>
+    <style>
+        /* ========== 基础重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary: #4299e1;
+            --primary-dark: #3182ce;
+            --bg: #f5f5f5;
+            --white: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-top: 120px;
+        }
+
+        /* ========== 顶部导航栏 ========== */
+        .header {
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            position: fixed;
+            top: 0;
+            z-index: 996;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .company-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        /* ========== 搜索栏（首页专用） ========== */
+        .search-section {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-bottom: 1px solid #eee;
+            padding: 10px 20px;
+            z-index: 995;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lang-toggle {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 70px 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 70px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .clear-btn:hover {
+            color: #666;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0;
+            width: 60px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ========== 主内容区 ========== */
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* ========== 分类网格 ========== */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .category-card:hover {
+            transform: scale(1.02);
+        }
+
+        .category-card img {
+            width: 100%;
+            aspect-ratio: 5 / 3;
+            object-fit: cover;
+            display: block;
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* ========== 产品列表 ========== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #eee;
+            gap: 15px;
+        }
+
+        .product-item:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow);
+        }
+
+        .product-thumb {
+            width: 100px;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .product-name {
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .product-model {
+            font-size: 14px;
+            color: #4299e1;
+            padding-left: 36px;
+            margin-top: 2px;
+        }
+
+        .product-num {
+            display: inline-block;
+            min-width: 32px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-right: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ========== 搜索高亮 ========== */
+        .highlight {
+            border: 2px solid var(--primary) !important;
+            background: #ebf8ff !important;
+            animation: highlightPulse 1s infinite alternate;
+        }
+
+        @keyframes highlightPulse {
+            from { box-shadow: 0 0 8px var(--primary); }
+            to { box-shadow: 0 0 16px var(--primary); }
+        }
+
+        /* ========== 详情弹窗 ========== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            max-height: 100vh;
+            overflow-y: auto;
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--text);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            line-height: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .detail-main-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            cursor: zoom-in;
+        }
+
+        .detail-body {
+            padding: 24px;
+        }
+
+        .detail-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .detail-model {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .detail-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .detail-toggle:hover {
+            background: var(--primary-dark);
+        }
+
+        .detail-extra {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .detail-extra.show {
+            display: block;
+        }
+
+        /* ========== 详情图片单列布局 ========== */
+        .detail-images {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .detail-images img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: zoom-in;
+            transition: var(--transition);
+        }
+
+        .detail-images img:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow);
+        }
+
+
+
+
+        /* ========== 图片放大弹窗 ========== */
+        .zoom-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            cursor: grab;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+        }
+
+        .zoom-modal:active {
+            cursor: grabbing;
+        }
+
+        .zoom-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transform-origin: center center;
+            transition: transform 0.1s ease;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .zoom-controls {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .zoom-level {
+            color: white;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+
+        .zoom-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ========== 隐藏状态 ========== */
+        .hidden {
+            display: none !important;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .header {
+                height: 50px;
+                padding: 0 12px;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .company-name {
+                font-size: 14px;
+            }
+
+            .search-section {
+                top: 50px;
+                padding: 10px 12px;
+            }
+
+            .search-box {
+                position: relative;
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+                height: 42px;
+                padding: 8px 65px 8px 12px;
+                font-size: 14px;
+            }
+
+            .search-btn {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 55px;
+                height: 42px;
+                font-size: 13px;
+                border-radius: 0 6px 6px 0;
+            }
+
+            .clear-btn {
+                position: absolute;
+                right: 60px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: auto;
+                height: auto;
+                background: none;
+                border: none;
+                font-size: 16px;
+                color: #999;
+            }
+
+            .lang-toggle {
+                justify-content: flex-end;
+                margin-top: 8px;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .category-card img {
+                aspect-ratio: 5 / 3;
+            }
+
+            .category-overlay {
+                background: rgba(0,0,0,0.4);
+            }
+
+            .category-name {
+                font-size: 16px;
+                font-weight: bold;
+                letter-spacing: 0;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+
+            .category-icon {
+                display: none;
+            }
+
+            .category-count {
+                display: none;
+            }
+
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-body {
+                padding: 16px;
+            }
+
+            .modal-close {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                top: 10px;
+                right: 10px;
+                background: rgba(255,255,255,1);
+                z-index: 10;
+            }
+
+            .detail-images img {
+                max-height: 300px;
+            }
+
+            .modal-content {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 105px;
+            }
+
+            .header {
+                height: 44px;
+                padding: 0 10px;
+                gap: 10px;
+            }
+
+            .logo {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .company-name {
+                font-size: 12px;
+            }
+
+            .search-section {
+                top: 44px;
+                padding: 8px 10px;
+            }
+
+            .lang-toggle {
+                gap: 6px;
+                margin-top: 6px;
+            }
+
+            .lang-btn {
+                padding: 4px 10px;
+                font-size: 12px;
+            }
+
+            .search-input {
+                height: 38px;
+                padding: 6px 60px 6px 10px;
+                font-size: 13px;
+            }
+
+            .search-btn {
+                width: 50px;
+                height: 38px;
+                font-size: 12px;
+            }
+
+            .clear-btn {
+                right: 55px;
+                font-size: 14px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .category-card img {
+                aspect-ratio: 5 / 3;
+            }
+
+            .category-name {
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 12px;
+            }
+
+            .product-item {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .product-thumb {
+                width: 80px;
+                aspect-ratio: 4 / 3;
+            }
+
+            .product-name {
+                font-size: 16px;
+            }
+
+            .product-model {
+                padding-left: 32px;
+            }
+
+            .detail-body {
+                padding: 14px;
+            }
+
+            .detail-title {
+                font-size: 16px;
+            }
+
+            .modal-close {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                top: 8px;
+                right: 8px;
+            }
+
+            .detail-images img {
+                max-height: 250px;
+            }
+
+            .modal-content {
+                max-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== 顶部导航栏 ========== -->
+    <header class="header">
+        <div class="logo-section">
+            <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAgGSURBVGhDvZlrbFNlGMefXre2W9eOlQnILiowNEpQlGsUhxdIgGhiNBEYUTQY8RK/SAJIYsAvfsIYgtEvJIJfJAwYmkCCifGLjAiSCGzjfpMJu3R0W9v15vN/z3nb07O267pz+Gcn7Tk9PX2f9/c+t3eWFItM1NnuCM15qFw9M09W9dU0Ld17iw6cD6ln5slUQ/68FaZgMEYb2/5Tr5gnUw1pae0md4Wd+kJxOnTBXCqmGXLydpgu3omQ024hj8tGG46YS8U0Q1oOdpPLbRfvHTaLQqVjUJybIVMMaWcaXUyjjGlIgcp7h7vVM+NliiFaGklEd/4DlV6mcrjDHF8x3BDQ6FRpwIhyu5ViScUY4SuHzfEVww3R0ojEkrRsho9qKx2UYKMklUMmUDHUkHbOG5JGgin42aDaSifNr6ukSDzJVFKCyrsmUDHUkHWtd9I0ojzwhfVeGh5JUI3HQVO9Tqai+Eo/U2k1OK8YZogSqaIZGi471fnLxOBBY1GDl8KCiuorBucVwwxZd1BHgwcOH4FgDKhME1QUXzGaiiGGnGTf6LozQk4eoJ4GhGwCKgsbFF9BRBZ5xUAqhhiynmsql9tGFh4xaCzAgFUaUgoVp/AVhGWZ7Y2iMmFDUFOJSKWhUe8vT9OQAhUYCV9RqCgRzKi8MmFD1su8kYdGnI2TvRu/pUlqBMN74SuDxlCZkCHpvCFpsEFaGjCi0WejaAIpRLmYTcW4CDYhQ1oOZdNA3pA0MMhgJElbF1XS4ocdwhgIRoIKIpj0FSMiWMmGIFJ1/pvJ4j72jemaSIX6at4UB9mtFtowx0OhkaQYOCyEsQuYyjC/4pqr3Ebv8KRMRCUbgu5PmzcWsW9E0zRSdD+apA+f9ohzhOVl9WV8LcVJMUVDfJ/baadAhYOG2EAswYFgnPaeGRD3l6KSdlFO3Y7Qc7uvks/LxSAPwuWw0ltzA1yOKIaMMJYZfht9scQrzh+ESiIyOovraaRo0zMKjQelcRP54/owPb/nOvl8Cg23k2nMCYjlAsWYxuM1dtq8sFKcS53ifFPB9yKfFFKUv1/KPlhJS8uyrYO8Hptw2hWz/VRboVS2EJyXC17at9qvXFC16qfbdPRv9gE2pqDCCWp9v45ea8qeiLFU0tL68qUauh9OirxRp8viVq5T4LxHLobVK4ra3p6GD0XeqMhxYGJ8FXbyVDtLyvYlGbJ9aQ3WEM2bXkkj7CN6uR0W2n8u2xDosxdrRKSq8ztFUakcTmqcVCYChrYGG28XWfTS+qVrEK0ErZxZIc63nbhHP5wJ0Ztzaiis+odWgxzB1jzholUzXOoVRasP9FElLy9OOyIsQ6DYH47Rz2d7eBJsgmg556eezY+Jz4tR0UQ++vUufcyH1M5lAbp7N0z9w3FR9eoFKvtyUDnyRjXtX+2jpwJ2kWsQqtFwVbtlDZbp7cez41KUIcji1+5GxYH3UtuW19Kxrn6xU6IXZhn2tV0abQy0ca5HUMOCwH2yBtN2kePp7YsyROk37OJYyzlEakdzDfXcizCVWH4q/+Q2BKXNi5ztZQ3Gqyldg8kuEr5yuMjdyTEN0e6MsD/SlWCCbobUX2dtWz6ZqQxQuc0qfEirNBVdBJP6QFDJlPnpyhg+J6kUWYONaYi2pkLpvWJWFe1qz8zSjuYAU2FficQQXUcpn69AChXnqMp4apWGSpH9SkFDsnYNmT0q3EcnldNVptLZG1PvUn2lM1iQytGCVLJ9Jb1xwdeK7VcKGpK1ayh+QOn+vGUW2nNmWFyH0r5SMpWMryR4/IE0leL3wfIa0s4Vrp6G7P7QY9wYSNDp7hH1bqItr06m4535fQU6mieCZVHhWzFpmQimUBlrxyWvIS2aCldLA+Jni3hf4858/SvOK/fgK5zY8lIpMoJhsjL7YJn/r7QWiGA5DUn7Bj9Adn/1vkxNhe5vbi2XGl7FUKmtTOVYV35fgYqiwucKFd0+WIEIltOQdbqdEbmxBuGhovvL0W8g2/f0sK8UoPJjASrNo6jo9sEKRLBRhiBvyP82SRraChc0Xqgro4DbplzQSaHCvsLZPhcV2KevjKU+ebZClCxaKiKCaajki2CjisZZ316lmwNxYQh20nP1G3LJ4ZKYOZeVvm6uUm5gWT4/R2uWTBEVbfbTQZT7FYbr4ufrfpoTrkVMFP+x0/PnfM3Nz2g730t9Q3Gy8edBpnJwzTR6fXZ2v5JFBLuGgobGN+o0vgFhVtHFxfhanA98dLE/QR2avAIqx/PkFQwQvRUGjO9rjzA/Vxoh7uVDLG1sM2mo5IpgWYak8wY/AQ9YUM+9OL/qBWNsmqMKeeX0kPqp4iuIYMFIPKevYKDa72sPaYQUJlHkFa2v5MgraUOUHfWI6BFk3miozqaRTxjArVByFBVk+7IcVMYjmJXtK7nzStoQWVNhQrB0Fjd6heNhRsc6eKxMxUrfa7K9oML9ygBTwdrXf2c8BwQ/ne4rE0svFxXh7Mgb83dfE/tUwAcqy5uq1c6v+Pns4z7+m1f89ORkpzhHF/ndXyF6eWYVxVF7TEBYzqFonH6/fJ+c+E8xTzICUq/aRQpDmjhS3VAjFQR8UXjfOAWCjX4HXfr0EfUK/8CWC+Qst4qBTFSgAyOkEMFa104TOy6WE5eHUst2XSGqzM7SJYuRt21qoJWzlN5++289tAMtMi89w4V1xqsntbOJLH3D8RTO5VqcqPAsLM+AJzMx9zgHoNA0Q9hLnuyx0f/5Qshe6S7lNQAAAABJRU5ErkJggg==" alt="鑫敏电子Logo">
+            <span class="company-name" id="companyName">佛山市鑫敏电子科技有限公司</span>
+        </div>
+    </header>
+
+    <!-- ========== 搜索栏 + 语言切换 ========== -->
+    <div class="search-section">
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索产品名称、型号...">
+            <button class="clear-btn" id="clearBtn">x</button>
+            <button class="search-btn" id="searchBtn">搜索</button>
+        </div>
+        <div class="lang-toggle">
+            <button class="lang-btn active" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="en">English</button>
+        </div>
+    </div>
+
+    <!-- ========== 主内容区 ========== -->
+    <main class="main-content">
+        <!-- 分类首页 -->
+        <div id="categoryPage">
+            <div class="page-title">
+                <h1 id="mainTitle">产品中心</h1>
+                <p id="mainSubtitle">十大品类 | 品质保障</p>
+            </div>
+            <div class="category-grid" id="categoryGrid"></div>
+        </div>
+
+        <!-- 产品列表页 -->
+        <div id="productPage" class="hidden">
+            <button class="back-btn" id="backBtn">
+                <span id="backText">返回分类</span>
+            </button>
+            <div class="page-title">
+                <h1 id="categoryTitle"></h1>
+            </div>
+            <div class="product-list" id="productList"></div>
+        </div>
+
+        <!-- 搜索结果页 -->
+        <div id="searchPage" class="hidden">
+            <button class="back-btn" id="searchBackBtn">
+                <span id="searchBackText">返回首页</span>
+            </button>
+            <div class="page-title">
+                <h1 id="searchTitle">搜索结果</h1>
+                <p id="searchCount"></p>
+            </div>
+            <div class="product-list" id="searchResults"></div>
+        </div>
+    </main>
+
+    <!-- ========== 产品详情弹窗 ========== -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <button class="modal-close" id="detailClose">x</button>
+            <img class="detail-main-img" id="detailMainImg" src="" alt="">
+            <div class="detail-body">
+                <h2 class="detail-title" id="detailTitle"></h2>
+                <p class="detail-model" id="detailModel"></p>
+                <button class="detail-toggle" id="detailToggle">
+                    <span id="toggleText">查看详情</span>
+                    <span id="toggleArrow">v</span>
+                </button>
+                <div class="detail-extra" id="detailExtra">
+                    <div class="detail-images" id="detailImages"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 图片放大弹窗 ========== -->
+    <div class="zoom-modal" id="zoomModal">
+        <button class="zoom-close" id="zoomClose">x</button>
+        <div class="zoom-container" id="zoomContainer">
+            <img class="zoom-img" id="zoomImg" src="" alt="">
+        </div>
+        <div class="zoom-controls">
+            <button class="zoom-btn" id="zoomOut">-</button>
+            <span class="zoom-level"><span id="zoomLevel">1.0</span>x</span>
+            <button class="zoom-btn" id="zoomIn">+</button>
+            <button class="zoom-btn" id="zoomReset">R</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== 语言配置 ==========
+        const lang = {
+            zh: {
+                companyName: '佛山市鑫敏电子科技有限公司',
+                mainTitle: '产品中心',
+                mainSubtitle: '十大品类 | 品质保障',
+                searchPlaceholder: '搜索产品名称、型号...',
+                searchBtn: '搜索',
+                backToCategory: '返回分类',
+                backToHome: '返回首页',
+                searchResults: '搜索结果',
+                searchCount: '找到 %d 个产品',
+                noResults: '未找到相关产品',
+                categories: [
+                    { name: '触摸类', count: '27 款产品' },
+                    { name: '手扫类', count: '11 款产品' },
+                    { name: '感应类', count: '6 款产品' },
+                    { name: '彩屏类', count: '3 款产品' },
+                    { name: '滑条类', count: '6 款产品' },
+                    { name: '天气模块类', count: '1 款产品' },
+                    { name: '蓝牙类', count: '5 款产品' },
+                    { name: '时钟类', count: '4 款产品' },
+                    { name: '语音控制类', count: '1 款产品' },
+                    { name: '配件类', count: '11 款产品' }
+                ]
+            },
+            en: {
+                companyName: 'Foshan Xinmin Electronics Technology Co., Ltd.',
+                mainTitle: 'Products',
+                mainSubtitle: 'Ten Categories | Quality Guaranteed',
+                searchPlaceholder: 'Search product name, model...',
+                searchBtn: 'Search',
+                backToCategory: 'Back to Categories',
+                backToHome: 'Back to Home',
+                searchResults: 'Search Results',
+                searchCount: 'Found %d products',
+                noResults: 'No products found',
+                categories: [
+                    { name: 'Touch Type', count: '27 Products' },
+                    { name: 'Hand Sweep Type', count: '11 Products' },
+                    { name: 'Sensor Type', count: '6 Products' },
+                    { name: 'Color Screen Type', count: '3 Products' },
+                    { name: 'Slider Type', count: '6 Products' },
+                    { name: 'Weather Module Type', count: '1 Product' },
+                    { name: 'Bluetooth Type', count: '5 Products' },
+                    { name: 'Clock Type', count: '4 Products' },
+                    { name: 'Voice Control Type', count: '1 Product' },
+                    { name: 'Accessories', count: '11 Products' }
+                ]
+            }
+        };
+
+        // ========== 分类封面图片 ==========
+        const categoryCovers = [
+            'images/category/触摸类.jpg',
+            'images/category/手扫类.jpg',
+            'images/category/感应类.jpg',
+            'images/category/彩屏类.jpg',
+            'images/category/滑条类.jpg',
+            'images/category/天气模块类.jpg',
+            'images/category/蓝牙类.jpg',
+            'images/category/时钟类.jpg',
+            'images/category/语音控制类.jpg',
+            'images/category/配件类.jpg'
+        ];
+
+        // ========== 产品数据 ==========
+        const categories = [
+            {
+                id: 'touch',
+                project: { zh: '触摸类', en: 'Touch Type' },
+                products: [
+                    { id: 'p001', num: 1, name: { zh: '单键不调光触摸开关', en: 'Single-key non-dimming touch switch' }, model: 'XM319-1-S4', cover: 'images/001/cover.jpg', imgs: { zh: ['images/001/zh/XM319-1-S4单键单色不调光触摸开关-规格说明书_01.png','images/001/zh/XM319-1-S4单键单色不调光触摸开关-规格说明书_02.png','images/001/zh/XM319-1-S4单键单色不调光触摸开关-规格说明书_03.png','images/001/zh/XM319-1-S4单键单色不调光触摸开关-规格说明书_04.png','images/001/zh/XM319-1-S4单键单色不调光触摸开关-规格说明书_05.png','images/001/zh/XM319-1-S4单键单色不调光触摸开关-规格说明书_06.png'], en: ['images/001/en/XM319-1-S4_01.png','images/001/en/XM319-1-S4_02.png','images/001/en/XM319-1-S4_03.png','images/001/en/XM319-1-S4_04.png','images/001/en/XM319-1-S4_05.png','images/001/en/XM319-1-S4_06.png'] } },
+                    { id: 'p002', num: 2, name: { zh: '单键调光触摸开关', en: 'Single-key dimming touch switch' }, model: 'XM319-1-S4T', cover: 'images/002/cover.jpg', imgs: { zh: ['images/002/zh/XM319-1-S4T单键单色调光触摸开关-规格说明书_01.png','images/002/zh/XM319-1-S4T单键单色调光触摸开关-规格说明书_02.png','images/002/zh/XM319-1-S4T单键单色调光触摸开关-规格说明书_03.png','images/002/zh/XM319-1-S4T单键单色调光触摸开关-规格说明书_04.png','images/002/zh/XM319-1-S4T单键单色调光触摸开关-规格说明书_05.png','images/002/zh/XM319-1-S4T单键单色调光触摸开关-规格说明书_06.png'], en: ['images/002/en/XM319-1-S4T_01.png','images/002/en/XM319-1-S4T_02.png','images/002/en/XM319-1-S4T_03.png','images/002/en/XM319-1-S4T_04.png','images/002/en/XM319-1-S4T_05.png','images/002/en/XM319-1-S4T_06.png'] } },
+                    { id: 'p003', num: 3, name: { zh: '单键不调光除雾触摸开关', en: 'Single-key non-dimming defogging touch switch' }, model: 'XM319-1-S5', cover: 'images/003/cover.jpg', imgs: { zh: ['images/003/zh/XM319-1-S5单键单色不调光除雾触摸开关-规格说明书_01.png','images/003/zh/XM319-1-S5单键单色不调光除雾触摸开关-规格说明书_02.png','images/003/zh/XM319-1-S5单键单色不调光除雾触摸开关-规格说明书_03.png','images/003/zh/XM319-1-S5单键单色不调光除雾触摸开关-规格说明书_04.png','images/003/zh/XM319-1-S5单键单色不调光除雾触摸开关-规格说明书_05.png','images/003/zh/XM319-1-S5单键单色不调光除雾触摸开关-规格说明书_06.png'], en: ['images/003/en/XM319-1-S5_01.png','images/003/en/XM319-1-S5_02.png','images/003/en/XM319-1-S5_03.png','images/003/en/XM319-1-S5_04.png','images/003/en/XM319-1-S5_05.png','images/003/en/XM319-1-S5_06.png'] } },
+                    { id: 'p004', num: 4, name: { zh: '单键调光除雾触摸开关', en: 'Single-key dimming defogging touch switch' }, model: 'XM319-1-S5T', cover: 'images/004/cover.jpg', imgs: { zh: ['images/004/zh/XM319-1-S5T单键单色调光除雾触摸开关-规格说明书_01.png','images/004/zh/XM319-1-S5T单键单色调光除雾触摸开关-规格说明书_02.png','images/004/zh/XM319-1-S5T单键单色调光除雾触摸开关-规格说明书_03.png','images/004/zh/XM319-1-S5T单键单色调光除雾触摸开关-规格说明书_04.png','images/004/zh/XM319-1-S5T单键单色调光除雾触摸开关-规格说明书_05.png','images/004/zh/XM319-1-S5T单键单色调光除雾触摸开关-规格说明书_06.png'], en: ['images/004/en/XM319-1-S5T_01.png','images/004/en/XM319-1-S5T_02.png','images/004/en/XM319-1-S5T_03.png','images/004/en/XM319-1-S5T_04.png','images/004/en/XM319-1-S5T_05.png','images/004/en/XM319-1-S5T_06.png'] } },
+                    { id: 'p005', num: 5, name: { zh: '单键单色流水灯', en: 'Single-key single-color dynamic light' }, model: 'XM319-1-RUN', cover: 'images/005/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p006', num: 6, name: { zh: '单键双色流水灯', en: 'Single-key two-color dynamic light' }, model: 'XM319-1-RUN-CW', cover: 'images/006/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p007', num: 7, name: { zh: '单键RGB流水灯', en: 'Single-key RGB dynamic light' }, model: 'XM319-1-RUN-RGB', cover: 'images/007/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p008', num: 8, name: { zh: '单键单色时钟一体', en: 'Single-key single-color with integrated clock' }, model: 'XM319-1T', cover: 'images/008/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p009', num: 9, name: { zh: '单键顺序三色触摸开关', en: 'Single-key sequential three-color touch switch' }, model: 'XM319-1', cover: 'images/009/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p010', num: 10, name: { zh: '单键双击切换三色触摸开关', en: 'Single-key double-click switching three-color touch switch' }, model: 'XM319-1A', cover: 'images/010/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p011', num: 11, name: { zh: '单键无极调色触摸开关', en: 'Single-key stepless color tuning touch switch' }, model: 'XM319-1D', cover: 'images/011/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p012', num: 12, name: { zh: '双键单色除雾触摸开关【20mm】间距', en: 'Double-key single-color defogging touch switch [20mm spacing]' }, model: 'XM319-2', cover: 'images/012/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p013', num: 13, name: { zh: '双键三色除雾触摸开关【20mm】间距', en: 'Double-key three-color defogging touch switch [20mm spacing]' }, model: 'XM319-2-CW', cover: 'images/013/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p014', num: 14, name: { zh: '双键单色除雾触摸开关【25mm】间距', en: 'Double-key single-color defogging touch switch [25mm spacing]' }, model: 'XM319-2', cover: 'images/014/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p015', num: 15, name: { zh: '双键三色除雾触摸开关【25mm】间距', en: 'Double-key three-color defogging touch switch [25mm spacing]' }, model: 'XM319-2-CW', cover: 'images/015/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p016', num: 16, name: { zh: '双键三色除雾触摸开关【38mm】间距', en: 'Double-key three-color defogging touch switch [38mm spacing]' }, model: 'XM319-2-CW', cover: 'images/016/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p017', num: 17, name: { zh: '双键单色时钟一体', en: 'Double-key single-color with integrated clock' }, model: 'XM319-2T', cover: 'images/017/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p018', num: 18, name: { zh: '双键三色时钟一体+温度（右开关左除雾）', en: 'Double-key three-color with integrated clock + temperature (right switch, left defog)' }, model: 'XM319-2T-CW+NTC', cover: 'images/018/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p019', num: 19, name: { zh: '双键三色时钟一体+温度（并排键）', en: 'Double-key three-color with integrated clock + temperature (side-by-side keys)' }, model: 'XM319-2T-CW+NTC', cover: 'images/019/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p020', num: 20, name: { zh: '三键单色除雾触摸开关', en: 'Three-key single-color defogging touch switch' }, model: 'XM319-3', cover: 'images/020/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p021', num: 21, name: { zh: '三键三色除雾触摸开关', en: 'Three-key three-color defogging touch switch' }, model: 'XM319-3B', cover: 'images/021/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p022', num: 22, name: { zh: '三键双色触摸流水灯开关', en: 'Three-key two-color touch dynamic light switch' }, model: 'XM319-3-RUN-CW', cover: 'images/022/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p023', num: 23, name: { zh: '三键RGB触摸流水灯开关', en: 'Three-key RGB touch dynamic light switch' }, model: 'XM319-3-RGB', cover: 'images/023/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p024', num: 24, name: { zh: '金属边框单色侧面触摸', en: 'Metal frame single-color side touch switch' }, model: 'XM319S-1', cover: 'images/024/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p025', num: 25, name: { zh: '金属边框双色侧面触摸', en: 'Metal frame two-color side touch switch' }, model: 'XM319S-1-CW', cover: 'images/025/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p026', num: 26, name: { zh: '侧面单色调光触摸', en: 'Side single-color dimming touch switch' }, model: 'XM319-Mini-Touch', cover: 'images/026/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p027', num: 27, name: { zh: '侧面双色调光触摸', en: 'Side two-color dimming touch switch' }, model: 'XM319-Mini-Touch-CW', cover: 'images/027/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'sweep',
+                project: { zh: '手扫类', en: 'Hand Sweep Type' },
+                products: [
+                    { id: 'p028', num: 28, name: { zh: '无背光单色调光手扫', en: 'Single-color dimming hand sweep without backlight' }, model: 'XM319-IR1', cover: 'images/028/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p029', num: 29, name: { zh: '无背光双色调光手扫', en: 'Two-color dimming hand sweep without backlight' }, model: 'XM319-IR1A', cover: 'images/029/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p030', num: 30, name: { zh: '大背光单色调光手扫', en: 'Single-color dimming hand sweep with large backlight' }, model: 'XM319-IR1B', cover: 'images/030/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p031', num: 31, name: { zh: '大背光双色调光手扫', en: 'Two-color dimming hand sweep with large backlight' }, model: 'XM319-IR1C', cover: 'images/031/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p032', num: 32, name: { zh: '双背光单色调光手扫', en: 'Single-color dimming hand sweep with dual backlight' }, model: 'XM319-IR2', cover: 'images/032/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p033', num: 33, name: { zh: '双背光双色调光手扫', en: 'Two-color dimming hand sweep with dual backlight' }, model: 'XM319-IR2A', cover: 'images/033/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p034', num: 34, name: { zh: '侧面单色调光手扫', en: 'Side single-color dimming hand sweep' }, model: 'XM319-side-A', cover: 'images/034/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p035', num: 35, name: { zh: '门控', en: 'Door control' }, model: 'XM319-side-B', cover: 'images/035/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p036', num: 36, name: { zh: '侧面双色调光手扫', en: 'Side two-color dimming hand sweep' }, model: 'XM319-side-A-CW', cover: 'images/036/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p037', num: 37, name: { zh: '手扫时钟单色温度一体', en: 'Hand sweep integrated with single-color clock & temperature' }, model: 'XM319-IR-T', cover: 'images/037/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p038', num: 38, name: { zh: '手扫时钟双色温度一体', en: 'Hand sweep integrated with two-color clock & temperature' }, model: 'XM319-IR-T-CW', cover: 'images/038/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'sensor',
+                project: { zh: '感应类', en: 'Sensor Type' },
+                products: [
+                    { id: 'p043', num: 43, name: { zh: '单键单色24G雷达感应开关', en: 'Single-key single-color 24G radar sensor switch' }, model: 'XM319-1-RAD', cover: 'images/043/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p044', num: 44, name: { zh: '单键单色24G雷达感应触摸开关', en: 'Single-key single-color 24G radar sensor touch switch' }, model: 'XM319-1-RAD-Dimming', cover: 'images/044/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p045', num: 45, name: { zh: '单键双色24G雷达感应触摸开关', en: 'Single-key two-color 24G radar sensor touch switch' }, model: 'XM319-1-RAD-CW', cover: 'images/045/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p046', num: 46, name: { zh: '双键单色24G雷达感应触摸开关', en: 'Double-key single-color 24G radar sensor touch switch' }, model: 'XM319-2-RAD', cover: 'images/046/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p047', num: 47, name: { zh: '双键双色24G雷达感应触摸开关', en: 'Double-key two-color 24G radar sensor touch switch' }, model: 'XM319-2-RAD-CW', cover: 'images/047/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p048', num: 48, name: { zh: '双键双色时间温度一体24G雷达感应触摸开关', en: 'Double-key two-color integrated with time & temperature 24G radar sensor touch switch' }, model: 'XM319-2T-RAD-CW', cover: 'images/048/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'colorscreen',
+                project: { zh: '彩屏类', en: 'Color Screen Type' },
+                products: [
+                    { id: 'p049', num: 49, name: { zh: '彩屏单键三色表盘', en: 'Color screen single-key three-color dial' }, model: 'TFT319-1CCT', cover: 'images/049/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p050', num: 50, name: { zh: '彩屏双键三色表盘', en: 'Color screen double-key three-color dial' }, model: 'TFT319-2CCT', cover: 'images/050/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p051', num: 51, name: { zh: '彩屏手扫三色表盘', en: 'Color screen hand sweep three-color dial' }, model: 'TFT319-SS02-CCT', cover: 'images/051/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'slider',
+                project: { zh: '滑条类', en: 'Slider Type' },
+                products: [
+                    { id: 'p052', num: 52, name: { zh: '单滑条单色滑条开关', en: 'Single slider single-color slider switch' }, model: 'XM319-Slider', cover: 'images/052/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p053', num: 53, name: { zh: '单滑条双色滑条开关', en: 'Single slider two-color slider switch' }, model: 'XM319-Slider-CW', cover: 'images/053/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p054', num: 54, name: { zh: '双键双色滑条开关', en: 'Double-key two-color slider switch' }, model: 'XM319-Slider-CW2', cover: 'images/054/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p055', num: 55, name: { zh: '三键双色滑条开关', en: 'Three-key two-color slider switch' }, model: 'XM319-Slider-CW3', cover: 'images/055/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p056', num: 56, name: { zh: '四键双色滑条开关', en: 'Four-key two-color slider switch' }, model: 'XM319-Slider-CW4', cover: 'images/056/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p057', num: 57, name: { zh: '三键双色时间温度一体滑条开关', en: 'Three-key two-color integrated time & temperature slider switch' }, model: 'XM319-3T-Slider-CW', cover: 'images/057/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'weather',
+                project: { zh: '天气模块类', en: 'Weather Module Type' },
+                products: [
+                    { id: 'p058', num: 58, name: { zh: '天气模块', en: 'Weather Module' }, model: 'XM8635', cover: 'images/058/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'bluetooth',
+                project: { zh: '蓝牙类', en: 'Bluetooth Type' },
+                products: [
+                    { id: 'p059', num: 59, name: { zh: '四键三色除雾蓝牙触摸开关', en: 'Four-key three-color defogging Bluetooth touch switch' }, model: '-', cover: 'images/059/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p060', num: 60, name: { zh: '三色大屏蓝牙带通话开关', en: 'Three-color large-screen Bluetooth switch with call function' }, model: 'XM518-BTSP', cover: 'images/060/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p061', num: 61, name: { zh: '不带通话蓝牙', en: 'Bluetooth without call function' }, model: 'XM-BT89', cover: 'images/061/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p062', num: 62, name: { zh: '带通话蓝牙', en: 'Bluetooth with call function' }, model: 'XM-BT89P', cover: 'images/062/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p063', num: 63, name: { zh: '迷你蓝牙（不带通话）', en: 'Mini Bluetooth (without call function)' }, model: 'XM-BT89', cover: 'images/063/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'clock',
+                project: { zh: '时钟类', en: 'Clock Type' },
+                products: [
+                    { id: 'p064', num: 64, name: { zh: '时间温度模块（24小时，摄氏）', en: 'Time & temperature module (24H, ℃)' }, model: 'XM319-T', cover: 'images/064/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p065', num: 65, name: { zh: '时间温度模块（12小时，华氏）', en: 'Time & temperature module (12H, ℉)' }, model: 'XM19-T3', cover: 'images/065/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p066', num: 66, name: { zh: '时间日期模块', en: 'Time & date module' }, model: 'XM319-TD', cover: 'images/066/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p067', num: 67, name: { zh: '三色大屏时钟', en: 'Three-color large-screen clock' }, model: 'XM518', cover: 'images/067/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'voice',
+                project: { zh: '语音控制类', en: 'Voice Control Type' },
+                products: [
+                    { id: 'p068', num: 68, name: { zh: '双键单色语音控制一体（中/英）', en: 'Double-key single-color integrated voice control (CN/EN)' }, model: '-', cover: 'images/068/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            },
+            {
+                id: 'accessories',
+                project: { zh: '配件类', en: 'Accessories' },
+                products: [
+                    { id: 'p070', num: 70, name: { zh: '双路大功率盒', en: '2-Channel High Power Box' }, model: 'XMST021', cover: 'images/070/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p071', num: 71, name: { zh: '单路大功率盒', en: '1-Channel High Power Box' }, model: 'XMST001', cover: 'images/071/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p072', num: 72, name: { zh: '12V防雾继电器', en: '12V Anti-Fog Relay' }, model: 'XM-R1', cover: 'images/072/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p073', num: 73, name: { zh: '24V防雾继电器', en: '24V Anti-Fog Relay' }, model: 'XM-R3', cover: 'images/073/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p074', num: 74, name: { zh: '12V防水继电器', en: '12V Waterproof Relay' }, model: 'XM-R2', cover: 'images/074/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p075', num: 75, name: { zh: '24V防水继电器', en: '24V Waterproof Relay' }, model: 'XM-R4', cover: 'images/075/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p076', num: 76, name: { zh: '厚款音箱（一对）', en: 'Thick Speaker (One Pair)' }, model: 'BT-88', cover: 'images/076/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p077', num: 77, name: { zh: '薄款音箱（一对）', en: 'Thin Speaker (One Pair)' }, model: 'SP-1550', cover: 'images/077/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p078', num: 78, name: { zh: '三色盒', en: 'Three-Color Box' }, model: 'XM-C02', cover: 'images/078/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p079', num: 79, name: { zh: '七色盒', en: 'Seven-Color Box' }, model: 'RGB-001', cover: 'images/079/cover.jpg', imgs: { zh: [], en: [] } },
+                    { id: 'p080', num: 80, name: { zh: '轻触开关', en: 'Tact Switch' }, model: '-', cover: 'images/080/cover.jpg', imgs: { zh: [], en: [] } }
+                ]
+            }
+        ];
+
+        // ========== 全局状态 ==========
+        let currentLang = 'zh';
+        let currentCategory = null;
+        let currentProduct = null;
+        let searchQuery = '';
+
+        // ========== DOM 元素 ==========
+        const $ = (id) => document.getElementById(id);
+        const categoryPage = $('categoryPage');
+        const productPage = $('productPage');
+        const searchPage = $('searchPage');
+        const categoryGrid = $('categoryGrid');
+        const productList = $('productList');
+        const searchResults = $('searchResults');
+        const searchInput = $('searchInput');
+        const clearBtn = $('clearBtn');
+        const detailModal = $('detailModal');
+        const zoomModal = $('zoomModal');
+        const zoomImg = $('zoomImg');
+        const zoomContainer = $('zoomContainer');
+
+        // ========== 图片缩放状态 ==========
+        let scale = 1;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let translateX = 0;
+        let translateY = 0;
+        let lastTouchDistance = 0;
+
+        // ========== 初始化 ==========
+        function init() {
+            renderCategories();
+            bindEvents();
+            updateLanguage();
+        }
+
+        // ========== 渲染分类 ==========
+        function renderCategories() {
+            const cats = lang[currentLang].categories;
+            categoryGrid.innerHTML = cats.map((cat, i) => `
+                <div class="category-card" data-index="${i}">
+                    <img src="${categoryCovers[i]}" alt="${cat.name}">
+                    <div class="category-overlay">
+                        <div class="category-name">${cat.name}</div>
+                        <div class="category-count">${cat.count}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== 渲染产品列表 ==========
+        function renderProducts(list, container, keyword = '') {
+            container.innerHTML = list.map(product => {
+                const name = product.name[currentLang];
+                const highlightedName = keyword ? highlightText(name, keyword) : name;
+                const numLabel = product.num ? `<span class="product-num">${String(product.num).padStart(3, '0')}.</span>` : '';
+                return `
+                    <div class="product-item" data-id="${product.id}">
+                        <img class="product-thumb" src="${product.cover}" alt="${name}">
+                        <div class="product-info">
+                            <div class="product-name">${numLabel}${highlightedName}</div>
+                            <div class="product-model">${product.model}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ========== 高亮搜索文字 ==========
+        function highlightText(text, keyword) {
+            if (!keyword) return text;
+            const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        // ========== 显示分类产品 ==========
+        function showCategoryProducts(index) {
+            currentCategory = categories[index];
+            const title = currentCategory.project[currentLang];
+            $('categoryTitle').textContent = title;
+            renderProducts(currentCategory.products, productList);
+            showPage('product');
+        }
+
+        // ========== 页面切换 ==========
+        function showPage(page) {
+            categoryPage.classList.toggle('hidden', page !== 'category');
+            productPage.classList.toggle('hidden', page !== 'product');
+            searchPage.classList.toggle('hidden', page !== 'search');
+            searchInput.value = '';
+            clearBtn.classList.remove('visible');
+        }
+
+        // ========== 产品详情 ==========
+        function showProductDetail(productId) {
+            const category = currentCategory || categories.find(c => c.products.some(p => p.id === productId));
+            const product = category.products.find(p => p.id === productId);
+            if (!product) return;
+
+            currentProduct = product;
+
+            $('detailMainImg').src = product.cover;
+            $('detailTitle').textContent = product.name[currentLang];
+            $('detailModel').textContent = product.model;
+
+            // 根据当前语言获取对应的图片
+            const currentImgs = product.imgs[currentLang];
+            $('detailImages').innerHTML = currentImgs.map((img, i) => `
+                <img src="${img}" alt="Image ${i + 1}" data-img="${img}">
+            `).join('');
+
+            $('detailExtra').classList.remove('show');
+            $('toggleText').textContent = currentLang === 'zh' ? '查看详情' : 'View Details';
+            $('toggleArrow').textContent = 'v';
+
+            detailModal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        // ========== 图片放大 ==========
+        function showZoom(imgSrc) {
+            zoomImg.src = imgSrc;
+            resetZoom();
+            zoomModal.classList.add('active');
+        }
+
+        function resetZoom() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateZoomTransform();
+        }
+
+        function updateZoomTransform() {
+            zoomImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            $('zoomLevel').textContent = scale.toFixed(1);
+        }
+
+        function zoom(delta) {
+            scale = Math.max(0.5, Math.min(3, scale + delta));
+            updateZoomTransform();
+        }
+
+        // ========== 语言切换 ==========
+        function updateLanguage() {
+            const l = lang[currentLang];
+
+            // 更新导航文字
+            $('companyName').textContent = l.companyName;
+            $('mainTitle').textContent = l.mainTitle;
+            $('mainSubtitle').textContent = l.mainSubtitle;
+            $('searchInput').placeholder = l.searchPlaceholder;
+            $('searchBtn').textContent = l.searchBtn;
+            $('backText').textContent = l.backToCategory;
+            $('searchBackText').textContent = l.backToHome;
+            $('searchTitle').textContent = l.searchResults;
+
+            // 更新按钮文字
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            });
+
+            // 重新渲染
+            renderCategories();
+
+            if (currentCategory) {
+                $('categoryTitle').textContent = currentCategory.project[currentLang];
+                renderProducts(currentCategory.products, productList);
+            }
+
+            if (currentProduct) {
+                $('detailTitle').textContent = currentProduct.name[currentLang];
+                // 更新详情图片为当前语言
+                const currentImgs = currentProduct.imgs[currentLang];
+                $('detailImages').innerHTML = currentImgs.map((img, i) => `
+                    <img src="${img}" alt="Image ${i + 1}" data-img="${img}">
+                `).join('');
+            }
+
+            // 重新搜索高亮
+            if (searchQuery) {
+                performSearch(searchQuery);
+            }
+        }
+
+        // ========== 搜索功能 ==========
+        function performSearch(query) {
+            searchQuery = query.trim().toLowerCase();
+            if (!searchQuery) {
+                clearBtn.classList.remove('visible');
+                return;
+            }
+
+            clearBtn.classList.add('visible');
+
+            const results = [];
+            categories.forEach(cat => {
+                cat.products.forEach(product => {
+                    const nameZh = product.name.zh.toLowerCase();
+                    const nameEn = product.name.en.toLowerCase();
+                    const model = product.model.toLowerCase();
+                    const numStr = String(product.num).padStart(3, '0');
+
+                    if (nameZh.includes(searchQuery) || nameEn.includes(searchQuery) || model.includes(searchQuery) || numStr.includes(searchQuery)) {
+                        results.push({ ...product, categoryName: cat.project[currentLang] });
+                    }
+                });
+            });
+
+            $('searchCount').textContent = results.length > 0
+                ? lang[currentLang].searchCount.replace('%d', results.length)
+                : lang[currentLang].noResults;
+
+            renderProducts(results, searchResults, searchQuery);
+            showPage('search');
+        }
+
+        // ========== 事件绑定 ==========
+        function bindEvents() {
+            // 语言切换
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentLang = btn.dataset.lang;
+                    // 清空搜索状态并回到首页
+                    searchInput.value = '';
+                    clearBtn.classList.remove('visible');
+                    searchQuery = '';
+                    currentCategory = null;
+                    currentProduct = null;
+                    detailModal.classList.remove('active');
+                    zoomModal.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                    showPage('category');
+                    updateLanguage();
+                });
+            });
+
+            // 搜索输入 - 监听文字变化显示/隐藏清除按钮
+            searchInput.addEventListener('input', (e) => {
+                if (e.target.value.trim()) {
+                    clearBtn.classList.add('visible');
+                } else {
+                    clearBtn.classList.remove('visible');
+                }
+            });
+
+            // 搜索按钮点击
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    performSearch(query);
+                } else {
+                    showPage('category');
+                }
+            });
+
+            // 回车键触发搜索
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        performSearch(query);
+                    }
+                }
+            });
+
+            // 清空搜索
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.classList.remove('visible');
+                showPage('category');
+                searchQuery = '';
+            });
+
+            // 分类点击
+            categoryGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.category-card');
+                if (card) {
+                    showCategoryProducts(parseInt(card.dataset.index));
+                }
+            });
+
+            // 返回按钮
+            $('backBtn').addEventListener('click', () => showPage('category'));
+            $('searchBackBtn').addEventListener('click', () => showPage('category'));
+
+            // 产品列表点击
+            productList.addEventListener('click', (e) => {
+                const item = e.target.closest('.product-item');
+                if (item) {
+                    showProductDetail(item.dataset.id);
+                }
+            });
+
+            // 搜索结果点击
+            searchResults.addEventListener('click', (e) => {
+                const item = e.target.closest('.product-item');
+                if (item) {
+                    showProductDetail(item.dataset.id);
+                }
+            });
+
+            // 详情弹窗关闭
+            $('detailClose').addEventListener('click', () => {
+                detailModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            });
+
+            detailModal.addEventListener('click', (e) => {
+                if (e.target === detailModal) {
+                    detailModal.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                }
+            });
+
+            // 详情展开/收起
+            $('detailToggle').addEventListener('click', () => {
+                const extra = $('detailExtra');
+                const isShow = extra.classList.toggle('show');
+                $('toggleText').textContent = isShow
+                    ? (currentLang === 'zh' ? '收起详情' : 'Hide Details')
+                    : (currentLang === 'zh' ? '查看详情' : 'View Details');
+                $('toggleArrow').textContent = isShow ? '^' : 'v';
+            });
+
+            // 详情页图片点击放大
+            $('detailMainImg').addEventListener('click', () => {
+                showZoom($('detailMainImg').src);
+            });
+
+            $('detailImages').addEventListener('click', (e) => {
+                if (e.target.tagName === 'IMG') {
+                    showZoom(e.target.dataset.img);
+                }
+            });
+
+            // ========== 图片缩放弹窗 ==========
+
+            // 关闭
+            $('zoomClose').addEventListener('click', () => {
+                zoomModal.classList.remove('active');
+            });
+
+            zoomModal.addEventListener('click', (e) => {
+                if (e.target === zoomModal || e.target === zoomContainer) {
+                    zoomModal.classList.remove('active');
+                }
+            });
+
+            // 按钮缩放
+            $('zoomIn').addEventListener('click', () => zoom(0.5));
+            $('zoomOut').addEventListener('click', () => zoom(-0.5));
+            $('zoomReset').addEventListener('click', resetZoom);
+
+            // 滚轮缩放
+            zoomModal.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.2 : 0.2;
+                zoom(delta);
+            });
+
+            // 鼠标拖拽平移
+            let imgStartX, imgStartY;
+
+            zoomContainer.addEventListener('mousedown', (e) => {
+                if (e.target === zoomImg) {
+                    isDragging = true;
+                    imgStartX = e.clientX - translateX;
+                    imgStartY = e.clientY - translateY;
+                    zoomModal.style.cursor = 'grabbing';
+                }
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    translateX = e.clientX - imgStartX;
+                    translateY = e.clientY - imgStartY;
+                    updateZoomTransform();
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                zoomModal.style.cursor = 'grab';
+            });
+
+            // 移动端双指缩放
+            zoomContainer.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    lastTouchDistance = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+                } else if (e.touches.length === 1 && scale > 1) {
+                    isDragging = true;
+                    imgStartX = e.touches[0].clientX - translateX;
+                    imgStartY = e.touches[0].clientY - translateY;
+                }
+            });
+
+            zoomContainer.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+
+                if (e.touches.length === 2) {
+                    const distance = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+
+                    if (lastTouchDistance > 0) {
+                        const delta = (distance - lastTouchDistance) / 200;
+                        zoom(delta);
+                    }
+                    lastTouchDistance = distance;
+                } else if (e.touches.length === 1 && isDragging && scale > 1) {
+                    translateX = e.touches[0].clientX - imgStartX;
+                    translateY = e.touches[0].clientY - imgStartY;
+                    updateZoomTransform();
+                }
+            }, { passive: false });
+
+            zoomContainer.addEventListener('touchend', () => {
+                isDragging = false;
+                lastTouchDistance = 0;
+            });
+
+
+            // 键盘ESC关闭 & 手机返回键关闭弹窗
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+
+            // 手机返回键处理（不关闭网页，只关闭弹窗）
+            window.addEventListener('popstate', (e) => {
+                closeAllModals();
+            });
+
+            function closeAllModals() {
+                detailModal.classList.remove('active');
+                zoomModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            // 拦截浏览器返回键，只关闭弹窗
+            history.pushState({ page: 'main' }, '', location.href);
+            window.addEventListener('popstate', (e) => {
+                if (e.state && e.state.page === 'main') {
+                    closeAllModals();
+                    history.pushState({ page: 'main' }, '', location.href);
+                }
+            });
+        }
+
+        // ========== 启动 ==========
+        init();
+    </script>
+</body>
+</html>
